@@ -55,8 +55,8 @@ pipeline {
                 echo 'Deploying Application'
                 sh 'docker run -d -p 8080:8080 ${DOCKER_IMAGE}'
             }
-        }
-    }*/
+        }*/
+    }
 
     // POST ACTIONS
     post {
