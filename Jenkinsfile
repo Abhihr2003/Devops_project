@@ -2,67 +2,34 @@ pipeline {
 
     agent any
 
-    tools {
-        maven 'mvn3.9.16'
-    }
-
-    environment {
-        APP_NAME = "java-maven-app"
-        DOCKER_IMAGE = "myapp:v1"
-    }
-
     stages {
 
-        // STEP 1 - Echo Commands
-        stage('Echo Stage') {
+        // BUILD STAGE
+        stage('Build') {
             steps {
-                echo 'Pipeline Started'
-                echo 'Learning Jenkins Declarative Pipeline'
+                echo 'Building Application'
             }
         }
 
-        // STEP 2 - Git Clone
-        stage('Git Clone') {
+        // TEST STAGE
+        stage('Test') {
             steps {
-                git 'https://github.com/jenkins-docs/simple-java-maven-app.git'
+                echo 'Running Test Cases'
             }
         }
 
-        // STEP 3 - Maven Build
-        stage('Maven Build') {
-            steps {
-                sh 'mvn clean package'
-            }
-        }
-
-        // STEP 4 - Run Test Cases
-        stage('Test Stage') {
-            steps {
-                sh 'mvn test'
-            }
-        }
-
-        // STEP 5 - Docker Build
-       /* stage('Docker Build') {
-            steps {
-                sh 'docker build -t ${DOCKER_IMAGE} .'
-            }
-        }
-
-        // STEP 6 - Deployment Stage
-        stage('Deploy Stage') {
+        // DEPLOY STAGE
+        stage('Deploy') {
             steps {
                 echo 'Deploying Application'
-                sh 'docker run -d -p 8080:8080 ${DOCKER_IMAGE}'
             }
-        }*/
+        }
     }
 
-    // POST ACTIONS
     post {
 
         success {
-            echo 'Pipeline Executed Successfully'
+            echo 'Pipeline Success'
         }
 
         failure {
@@ -70,7 +37,8 @@ pipeline {
         }
 
         always {
-            echo 'Pipeline Execution Completed'
+            echo 'Pipeline Completed'
         }
     }
 }
+
